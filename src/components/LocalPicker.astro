@@ -1,0 +1,22 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+const availableLocales = [
+  { code: "fr", label: "🇫🇷 Français", url: getRelativeLocaleUrl("fr", "/") },
+  { code: "en", label: "🇬🇧 English", url: getRelativeLocaleUrl("en", "/") },
+];
+
+const currentLocale = Astro.currentLocale;
+
+const localeLinks = availableLocales.filter(
+  (locale) => locale.code !== currentLocale
+);
+---
+
+{
+  localeLinks.map((locale) => (
+    <a href={locale.url} class="header-link">
+      {locale.label}
+    </a>
+  ))
+}

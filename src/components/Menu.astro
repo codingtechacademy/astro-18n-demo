@@ -1,0 +1,55 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { defaultLocale, locales } from "../config/i18n";
+
+interface MenuLinkItem {
+  label: string;
+  url: string;
+}
+
+
+const menulinks: Record<string, MenuLinkItem[]> = {
+  fr: [
+    { label: "Accueil", url: getRelativeLocaleUrl("fr", "/") },
+    { label: "A propos", url: getRelativeLocaleUrl("fr", "/about") },
+  ],
+  en: [
+    { label: "Home", url: getRelativeLocaleUrl("en", "/") },
+    { label: "About", url: getRelativeLocaleUrl("en", "/about") },
+  ],
+};
+
+const currentLocale = Astro.currentLocale ?? defaultLocale;
+const linksByLocale = menulinks[currentLocale];
+---
+
+<nav class="menu">
+  <ul>
+    {
+      linksByLocale.map(({ label, url }) => (
+        <li>
+          <a href={url} class="header-link">
+            {label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  ul {
+    display: flex;
+    gap: 1.3rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .menu {
+    display: flex;
+    justify-content: start;
+    flex: 1;
+    gap: 1rem;
+  }
+</style>
